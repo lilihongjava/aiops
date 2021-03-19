@@ -5,12 +5,52 @@
 @file: time_series_tool.py
 @desc: 
 """
-import numpy as np
-from pywt import wavedec
 import matplotlib.pylab as plt
+import numpy as np
+import pandas as pd
+from pywt import wavedec
+from scipy import signal
+
+
+def is_periodicity(data, show_pic=False):
+    """
+    :param data:  检测数据，ndarray类型
+    :param show_pic: 是否展示图片
+    :return: is_cycle为是否周期性, cycles为可能的周期列表
+    """
+    # 使用周期图法估计功率谱密度
+    f, Pxx_den = signal.periodogram(data)
+
+    if show_pic is True:
+        plt.plot(Pxx_den)
+        # set the x limits
+        plt.xlim(-0.5, 100)
+        plt.show()
+
+    result = pd.DataFrame(columns=['freq', 'spec'])
+    result['freq'] = f
+    result['spec'] = Pxx_den
+    # 按照频率强弱程度降序排列
+    result = result.sort_values(by='spec', ascending=False)
+    # 频率转换为周期
+    cycle_list = 1 / result.head(2)['freq'].values
+    is_cycle = False
+    cycles = []
+    for cycle in cycle_list:
+        # 判断是不是整数
+        if cycle % 1 == 0:
+            is_cycle = True
+            cycles.append(cycle)
+    return is_cycle, cycles
 
 
 def is_stable(data, n_threshold=1.1, show_pic=False):
+    """
+    :param data: 检测数据，ndarray类型
+    :param n_threshold: 阈值
+    :param show_pic: 是否展示图片
+    :return: True为平稳数据，False波动数据
+    """
     # 标准差
     raw_data_std = np.std(data, ddof=1)
     # 一维离散信号的小波变换
