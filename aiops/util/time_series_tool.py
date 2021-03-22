@@ -12,6 +12,25 @@ from pywt import wavedec
 from scipy import signal
 
 
+def data_classification_tree(data):
+    """
+    :param data: 检测数据，ndarray类型
+    :return: 0 平稳数据,1 周期数据, 2非周期数据
+    """
+    boolen_is_stable = is_stable(data)
+    boolen_is_periodicity = is_periodicity(data)
+    if boolen_is_stable:
+        # 平稳数据
+        return 0
+    else:
+        if boolen_is_periodicity[0]:
+            # 周期数据
+            return 1
+        else:
+            # 非周期数据
+            return 2
+
+
 def is_periodicity(data, show_pic=False):
     """
     :param data:  检测数据，ndarray类型
