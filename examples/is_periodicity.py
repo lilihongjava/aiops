@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # 周期数据
     df = pd.read_csv('../data/api_access_fix.csv')
     data = df['count'].values
-    is_cycle, cycles = is_periodicity(data)
+    is_cycle, cycles = is_periodicity(data, True)
     print("是否周期：%s，可能周期：%s" % (is_cycle, cycles))
 
     # 平稳数据

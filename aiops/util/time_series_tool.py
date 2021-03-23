@@ -41,9 +41,7 @@ def is_periodicity(data, show_pic=False):
     f, Pxx_den = signal.periodogram(data)
 
     if show_pic is True:
-        plt.plot(Pxx_den)
-        # set the x limits
-        plt.xlim(-0.5, 100)
+        plt.plot(1 / f, Pxx_den)
         plt.show()
 
     result = pd.DataFrame(columns=['freq', 'spec'])
