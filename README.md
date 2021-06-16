@@ -8,3 +8,6 @@
 
 ## examples/data_classification_tree.py
 算法选择树，判断波形属于周期型、平稳型还是非周期性
+
+## examples/kde_transformation.py
+核密度估计(kde)实现异常程度转换
