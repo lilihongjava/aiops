@@ -1,4 +1,6 @@
 # aiops
+原理和代码说明
+https://blog.csdn.net/qq_33873431/category_10028725.html
 
 ## examples/is_stable.py
 通过小波变换检测波形是否平稳
@@ -11,3 +13,6 @@
 
 ## examples/kde_transformation.py
 核密度估计(kde)实现异常程度转换
+
+## examples/root_cause_detection.py
+通过异常分数表实现根因节点查找
